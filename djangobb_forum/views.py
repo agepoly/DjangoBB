@@ -82,6 +82,7 @@ def index(request, full=True):
 def moderate(request, forum_id):
     forum = get_object_or_404(Forum, pk=forum_id)
     topics = forum.topics.order_by('-sticky', '-updated').select_related()
+    topics = paginate(topics, request.GET.get("page", 1), forum_settings.TOPIC_PAGE_SIZE, 10)
     if request.user.is_superuser or request.user in forum.moderators.all():
         topic_ids = request.POST.getlist('topic_id')
         if 'move_topics' in request.POST:
@@ -139,7 +140,11 @@ def search(request):
     # Create 'user viewable' pre-filtered topics/posts querysets
     viewable_category = Category.objects.all()
     topics = Topic.objects.all().order_by("-last_post__created")
+    if show_as_posts:
+        topics = paginate(topics, request.GET.get("page", 1), forum_settings.SEARCH_PAGE_SIZE, 20)
     posts = Post.objects.all().order_by('-created')
+    if not show_as_posts:
+        posts = paginate(posts, request.GET.get("page", 1), forum_settings.SEARCH_PAGE_SIZE, 20)
     user = request.user
     if not user.is_superuser:
         user_groups = user.groups.all() or [] # need 'or []' for anonymous user otherwise: 'EmptyManager' object is not iterable
@@ -661,6 +666,8 @@ def edit_post(request, post_id):
 def delete_posts(request, topic_id):
 
     topic = Topic.objects.select_related().get(pk=topic_id)
+    topic = paginate(topic, request.GET.get("page", 1),
+                     forum_settings.TOPIC_PAGE_SIZE, 10)
 
     if forum_moderated_by(topic, request.user):
         deleted = False
@@ -798,6 +805,9 @@ def open_close_topic(request, topic_id, action):
 
 def users(request):
     users = User.objects.filter(forum_profile__post_count__gte=forum_settings.POST_USER_SEARCH).order_by('username')
+    users = paginate(users, request.GET.get("page", 1),
+                     forum_settings.USERS_PAGE_SIZE, 20)
+
     form = UserSearchForm(request.GET)
     users = form.filter(users)
     return render(request, 'djangobb_forum/users.html', {'users': users,
