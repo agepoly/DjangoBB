@@ -1,14 +1,13 @@
 {% extends 'djangobb_forum/base.html' %}
 {% load forum_extras %}
-{% load pagination_tags %}
+{% load mezzanine_tags %}
 {% load i18n %}
 
 {% block title %} / {{ topic.forum.name }} / {{ topic.name }}{% endblock %}
 {% block content %}
-{% autopaginate posts forum_settings.TOPIC_PAGE_SIZE %}
 <div class="linkst">
 	<div class="inbox">
-		<div class="pagelink conl">{% paginate %}</div>
+		<div class="pagelink conl">{% pagination_for posts %}</div>
 		<ul>
 			<li>
 			<a href="{% url 'djangobb:index' %}">{% trans "Root" %} </a></li><li>&raquo; {% link topic.forum %} </li><li>&raquo; {{ topic.name }}
@@ -166,7 +165,7 @@
 {% endfor %}
 <div class="postlinksb">
 	<div class="inbox">
-		<div class="pagelink conl">{% paginate %}</div>
+		<div class="pagelink conl">{% pagination_for posts %}</div>
 			<ul>
 			    <li><a href="{% url 'djangobb:index' %}">{% trans "Root" %} </a></li>
 			    <li>&raquo; {% link topic.forum %} </li>

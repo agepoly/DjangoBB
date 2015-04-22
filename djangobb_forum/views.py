@@ -32,8 +32,9 @@ from djangobb_forum.models import Category, Forum, Topic, Post, Reputation, \
     Attachment, PostTracking
 from djangobb_forum.templatetags import forum_extras
 from djangobb_forum.templatetags.forum_extras import forum_moderated_by
-from djangobb_forum.util import build_form, paginate, set_language, smiles, convert_text_to_html
+from djangobb_forum.util import build_form, set_language, smiles, convert_text_to_html
 
+from mezzanine.utils.views import paginate
 
 
 def index(request, full=True):
@@ -340,6 +341,8 @@ def show_forum(request, forum_id, full=True):
     if not forum.category.has_access(request.user):
         raise PermissionDenied
     topics = forum.topics.order_by('-sticky', '-updated').select_related()
+    topics = paginate(topics, request.GET.get("page", 1),
+                      forum_settings.FORUM_PAGE_SIZE, 20)
     moderator = request.user.is_superuser or\
         request.user in forum.moderators.all()
 
@@ -385,6 +388,8 @@ def show_topic(request, topic_id, full=True):
     if request.user.is_authenticated():
         topic.update_read(request.user)
     posts = topic.posts.all().select_related()
+    posts = paginate(posts, request.GET.get("page", 1),
+                     forum_settings.TOPIC_PAGE_SIZE, 20)
 
     moderator = request.user.is_superuser or request.user in topic.forum.moderators.all()
     if user_is_authenticated and request.user in topic.subscribers.all():

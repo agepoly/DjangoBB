@@ -1,5 +1,5 @@
 {% extends 'djangobb_forum/lofi/base.html' %}
-{% load pagination_tags %}
+{% load mezzanine_tags %}
 {% load forum_extras %}
 {% load i18n %}
 
@@ -9,9 +9,8 @@
 	<a href="{% url 'djangobb:lofi_index' %}">{% trans "Root" %}</a> &raquo; {% lofi_link topic.forum %} &raquo; {% lofi_link topic %}
 </div>
 
-{% autopaginate posts forum_settings.TOPIC_PAGE_SIZE %}
 <div class="djangobbpagespan">
-	{% lofi_pagination %}
+    {% pagination_for posts %}
 </div>
 
 <div id='djangobbcontent'>

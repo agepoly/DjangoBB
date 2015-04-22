@@ -1,13 +1,12 @@
 {% extends 'djangobb_forum/base.html' %}
-{% load pagination_tags %}
+{% load mezzanine_tags %}
 {% load forum_extras %}
 {% load i18n %}
 
 {% block content %}
-{% autopaginate topics forum_settings.SEARCH_PAGE_SIZE %}
 <div class="linkst">
 	<div class="inbox">
-		<p class="pagelink">{% paginate %}</p>
+		<p class="pagelink">{% pagination_for posts %}</p>
 		<div class="clearer"></div>
 	</div>
 </div>
@@ -66,7 +65,7 @@
 
 <div class="linksb">
 	<div class="inbox">
-		<p class="pagelink">{% paginate %}</p>
+		<p class="pagelink">{% pagination_for posts %}</p>
 		<div class="clearer"></div>
 	</div>
 </div>

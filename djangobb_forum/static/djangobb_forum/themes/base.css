@@ -114,6 +114,10 @@ FORM DIV.linksb .conr {WIDTH: 32em}
 
 .linkst UL, linksb UL, .postlinksb UL {MARGIN-LEFT: 18em}
 
+ul.pagination {
+    margin-left: 0em;
+}
+
 /* 5.4 Settings for Profile and Admin interface.*/
 
 DIV.block2col {PADDING-BOTTOM: 1px}
