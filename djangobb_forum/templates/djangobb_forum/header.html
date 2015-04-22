@@ -30,7 +30,7 @@
 		<div id="brdwelcome" class="inbox">
 			<ul class="conl">
 				{% if user.is_authenticated %}
-					<li>{% trans "Logged in as" %} <strong>{{ user.username }}</strong></li>
+					<li>{% trans "Logged in as" %} <strong>{{ user.first_name }} {{ user.last_name }}</strong></li>
 					<li>{% trans "Last visit:" %} {% forum_time user.last_login %}</li>
 					{% if forum_settings.PM_SUPPORT and messages_inbox_count > 0 %}
 						<ul><li class="pmlink"><strong><a href="{% url 'messages_inbox' %}">{% trans "There are new messages" %} ({{ messages_inbox_count }})</a></strong></li></ul>

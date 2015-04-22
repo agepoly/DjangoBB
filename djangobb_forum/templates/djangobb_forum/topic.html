@@ -56,7 +56,7 @@
 			<div class="inbox">
 				<div class="postleft">
 					<dl>
-						<dt><strong class="username">{{ post.user.username }}</strong></dt>
+						<dt><strong class="username">{{ post.user.first_name }} {{ post.user.last_name }}</strong></dt>
 						<dd class="usertitle">
 							{% if post.user.forum_profile.status %}
 								<strong>{{ post.user.forum_profile.status }}</strong>

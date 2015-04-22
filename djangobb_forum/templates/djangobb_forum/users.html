@@ -1,10 +1,9 @@
 {% extends 'djangobb_forum/base.html' %}
-{% load pagination_tags %}
+{% load mezzanine_tags %}
 {% load forum_extras %}
 {% load i18n %}
 
 {% block content %}
-{% autopaginate users forum_settings.USERS_PAGE_SIZE %}
 <div class="blockform">
 	<h2><span>{% trans "User search" %}</span></h2>
 	<div class="box">
@@ -34,7 +33,7 @@
 </div>
 <div class="linkst">
 	<div class="inbox">
-		{% paginate %}
+        {% pagination_for users %}
 	</div>
 </div>
 <div id="users1" class="blocktable">
@@ -66,7 +65,7 @@
 </div>
 <div class="linkst">
 	<div class="inbox">
-		{% paginate %}
+        {% pagination_for users %}
 	</div>
 </div>
 {% endblock %}
