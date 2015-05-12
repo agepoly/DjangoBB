@@ -162,8 +162,8 @@ class EditPostForm(forms.ModelForm):
 
 
 class EssentialsProfileForm(forms.ModelForm):
-    username = forms.CharField(label=_('Username'))
-    email = forms.CharField(label=_('E-mail'))
+    # username = forms.CharField(label=_('Username'))
+    # email = forms.CharField(label=_('E-mail'))
 
     class Meta:
         model = Profile
@@ -174,16 +174,16 @@ class EssentialsProfileForm(forms.ModelForm):
         self.request = extra_args.pop('request', None)
         self.profile = kwargs['instance']
         super(EssentialsProfileForm, self).__init__(*args, **kwargs)
-        self.fields['username'].initial = self.profile.user.username
+        # self.fields['username'].initial = self.profile.user.username
         if not self.request.user.is_superuser:
             self.fields['username'].widget = forms.HiddenInput()
-        self.fields['email'].initial = self.profile.user.email
+        # self.fields['email'].initial = self.profile.user.email
 
     def save(self, commit=True):
         if self.cleaned_data:
-            if self.request.user.is_superuser:
-                self.profile.user.username = self.cleaned_data['username']
-            self.profile.user.email = self.cleaned_data['email']
+            # if self.request.user.is_superuser:
+            #     self.profile.user.username = self.cleaned_data['username']
+            # self.profile.user.email = self.cleaned_data['email']
             self.profile.time_zone = self.cleaned_data['time_zone']
             self.profile.language = self.cleaned_data['language']
             self.profile.user.save()
@@ -194,7 +194,7 @@ class EssentialsProfileForm(forms.ModelForm):
 
 
 class PersonalProfileForm(forms.ModelForm):
-    name = forms.CharField(label=_('Real name'), required=False)
+    # name = forms.CharField(label=_('Real name'), required=False)
 
     class Meta:
         model = Profile
@@ -204,22 +204,22 @@ class PersonalProfileForm(forms.ModelForm):
         extra_args = kwargs.pop('extra_args', {})
         self.profile = kwargs['instance']
         super(PersonalProfileForm, self).__init__(*args, **kwargs)
-        self.fields['name'].initial = "%s %s" % (self.profile.user.first_name, self.profile.user.last_name)
+        # self.fields['name'].initial = "%s %s" % (self.profile.user.first_name, self.profile.user.last_name)
 
     def save(self, commit=True):
         self.profile.status = self.cleaned_data['status']
         self.profile.location = self.cleaned_data['location']
         self.profile.site = self.cleaned_data['site']
-        if self.cleaned_data['name']:
-            cleaned_name = self.cleaned_data['name'].strip()
-            if  ' ' in cleaned_name:
-                self.profile.user.first_name, self.profile.user.last_name = cleaned_name.split(None, 1)
-            else:
-                self.profile.user.first_name = cleaned_name
-                self.profile.user.last_name = ''
-            self.profile.user.save()
-            if commit:
-                self.profile.save()
+        # if self.cleaned_data['name']:
+        #     cleaned_name = self.cleaned_data['name'].strip()
+        #     if  ' ' in cleaned_name:
+        #         self.profile.user.first_name, self.profile.user.last_name = cleaned_name.split(None, 1)
+        #     else:
+        #         self.profile.user.first_name = cleaned_name
+        #         self.profile.user.last_name = ''
+        self.profile.user.save()
+        if commit:
+            self.profile.save()
         return self.profile
 
 
