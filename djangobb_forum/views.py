@@ -7,7 +7,7 @@ from django.utils import timezone
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
 from django.core.cache import cache
 from django.core.exceptions import SuspiciousOperation, PermissionDenied
@@ -23,7 +23,6 @@ from django.conf import settings
 
 from haystack.query import SearchQuerySet, SQ
 
-from djangobb_forum.user import User
 from djangobb_forum import settings as forum_settings
 from djangobb_forum.forms import AddPostForm, EditPostForm, UserSearchForm, \
     PostSearchForm, ReputationForm, MailToForm, EssentialsProfileForm, \
@@ -36,6 +35,7 @@ from djangobb_forum.util import build_form, set_language, smiles, convert_text_t
 
 from mezzanine.utils.views import paginate
 
+User = get_user_model()
 
 def index(request, full=True):
     users_cached = cache.get('djangobb_users_online', {})
