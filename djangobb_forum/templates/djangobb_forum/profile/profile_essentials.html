@@ -10,6 +10,41 @@
 		<div class="box">
 			<form id="profile1" method="post">
 				{% csrf_token %}
+				{# <div class="inform"> #}
+				{# 	<fieldset> #}
+				{# 		<legend>{% trans "Enter your username and password" %}</legend> #}
+				{# 		<div class="infldset"> #}
+				{# 			{{ form.username.errors }} #}
+				{# 			<label><strong>{{ form.username.label }}</strong><br> #}
+				{# 			{{ form.username }} #}
+				{# 			{% if not user.is_superuser %} #}
+				{# 				{{ form.fields.username.initial }} #}
+				{# 			{% endif %} #}
+				{# 			<br></label> #}
+				{# 			<p> #}
+				{# 			{% if user.is_superuser %} #}
+				{# 				<a href="{% url 'admin:auth_user_password_change' profile.id %}">{% trans "Change password" %}</a> #}
+				{# 			{% else %} #}
+				{# 				<a href="{% url 'account_change_password' %}">{% trans "Change password" %}</a> #}
+				{# 			{% endif %} #}
+				{# 			</p> #}
+				{# 	</div> #}
+				{# 	</fieldset> #}
+				{# </div> #}
+				{# <div class="inform"> #}
+				{# 	<fieldset> #}
+				{# 		<legend>{% trans "Enter a valid e-mail address" %}</legend> #}
+				{# 		<div class="infldset"> #}
+				{# 			{{ form.email.errors }} #}
+				{# 			<label><strong>{{ form.email.label }}</strong><br> #}
+				{# 			{{ form.email }}<br></label> #}
+				{# 			{% if user.is_superuser %} #}
+				{# 				<p><a href="{% url 'djangobb:misc' %}?mail_to={{ profile }}">{% trans "Send e-mail" %}</a></p> #}
+				{# 			{% endif %} #}
+                {#  #}
+				{# 		</div> #}
+				{# 	</fieldset> #}
+				{# </div> #}
                 <div class="inform">
                     <fieldset>
                         <legend>{{ form.auto_subscribe.label }}</legend>
